@@ -1,4 +1,4 @@
-const {Schema, model} = require('mongoose');
+const {Schema, model} = require('mongoose'); //Types or model? 
 //destructure object
 
 const userSchema= new Schema(
@@ -27,7 +27,7 @@ const userSchema= new Schema(
         }]
 
     });
-
+// virtual for getting number of friends
     userSchema.virtual('friendCount').get(function () {
         return this.friends.length;
     });
