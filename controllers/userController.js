@@ -35,6 +35,8 @@ module.exports = {
       res.status(500).json(err);
     }
   },
+
+  //update user route controller
   async updateUser(req, res) {
     try {
       const user = await User.findOneAndUpdate(
@@ -54,6 +56,8 @@ module.exports = {
       res.status(500).json(err);
     }
   },
+
+  //delete user route controller
   async deleteUser(req, res) {
     try {
       const user = await User.findOneAndRemove({ _id: req.params.userId });
@@ -63,8 +67,6 @@ module.exports = {
           message: "No user with that Id",
         });
       }
-
-      // Remove the user from the friends list of other users
       await User.updateMany(
         { friends: req.params.userId },
         { $pull: { friends: req.params.userId } }
@@ -75,6 +77,8 @@ module.exports = {
       res.status(500).json(err);
     }
   },
+
+  //add friend route controller
   async createFriend(req, res) {
     try {
       const userFriend = await User.FindOneandUpdate(
@@ -94,6 +98,7 @@ module.exports = {
     }
   },
 
+  //delete friend route controller
   async deleteFriend(req, res) {
     try {
       const user = await User.findOneAndUpdate(

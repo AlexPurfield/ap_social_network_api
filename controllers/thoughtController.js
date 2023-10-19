@@ -1,7 +1,7 @@
 const Thought = require("../models/Thought");
 
 module.exports = {
-  //get all users route controller
+  //get all thoughts route controller (get)
   async getThoughts(req, res) {
     try {
       const thoughts = await Thought.find();
@@ -11,7 +11,7 @@ module.exports = {
     }
   },
 
-  // get single user with Id route controller
+  // get single thought with Id route controller (get)
   async getSingleThought(req, res) {
     try {
       const thought = await Thought.findOne({
@@ -26,7 +26,7 @@ module.exports = {
     }
   },
 
-  //create new user route controller
+  //create new thought route controller (post)
   async createThought(req, res) {
     try {
       const newThoughtData = await Thought.create(req.body);
@@ -35,6 +35,8 @@ module.exports = {
       res.status(500).json(err);
     }
   },
+
+  //update (put) thought route controller
   async updateThought(req, res) {
     try {
       const thought = await Thought.findOneAndUpdate(
@@ -54,6 +56,8 @@ module.exports = {
       res.status(500).json(err);
     }
   },
+
+  //delete thought route controller (delete)
   async deleteThought(req, res) {
     try {
       const thought = await Thought.findOneAndRemove({ _id: req.params.thoughtId });
@@ -75,7 +79,9 @@ module.exports = {
       res.status(500).json(err);
     }
   },
-  async createReaction(req, res) {
+
+  // react (reply) to thought route controller (post reaction)
+  async addReactionToThought(req, res) {
     try {
       const reaction = await Thought.FindOneandUpdate(
         { _id: req.params.thoughtId },
@@ -94,6 +100,7 @@ module.exports = {
     }
   },
 
+  //delete reaction from thought route controller (delete)
   async deleteReaction(req, res) {
     try {
       const thought = await Thought.findOneAndUpdate(
