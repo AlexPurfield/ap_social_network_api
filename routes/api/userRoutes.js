@@ -20,7 +20,7 @@ router.route('/:userId').get(getSingleUser).put(updateUser).delete(deleteUser);
 router.route('/:userId/friends').post(createFriend);
 
 //http://localhost:3001/users/userId/friends/:friendsId
-router.route('/:userId/friends/friendId').delete(deleteFriend);
+router.route('/:userId/friends/:friendId').delete(deleteFriend);
 
 
 module.exports = router;
