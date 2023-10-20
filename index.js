@@ -1,5 +1,5 @@
 const express= require('express');
-const db = require('.config/connection');
+const db = require('./config/connection');
 const routes = require('./routes');
 
 const cwd =process.cwd();
@@ -12,7 +12,7 @@ const activity = cwd.includes('18-socialnetwork')
 : cwd;
 
 app.use(express.urlencoded({ extended:true}));
-app.use(expressjson());
+app.use(express());
 app.use(routes);
 
 db.once('open', () => {
