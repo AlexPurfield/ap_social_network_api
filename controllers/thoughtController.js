@@ -64,11 +64,10 @@ module.exports = {
 
       if (!thought) {
         return res.status(404).json({
-          message: "No user with that Id",
+          message: "No thought with that Id",
         });
       }
 
-  
       await Thought.updateMany(
         { reactions: req.params.thoughtId },
         { $pull: { reactions: req.params.thoughtId } }
@@ -83,9 +82,9 @@ module.exports = {
   // react (reply) to thought route controller (post reaction)
   async addReactionToThought(req, res) {
     try {
-      const reaction = await Thought.FindOneandUpdate(
+      const reaction = await Thought.findOneAndUpdate(
         { _id: req.params.thoughtId },
-        { $addtoSet: { reactions: req.body } },
+        { $push: { reactions: req.body } },
         { runValidators: true, new: true }
       );
 

@@ -29,6 +29,7 @@ module.exports = {
 // Create new user route controller
 async createUser(req, res) {
   try {
+    console.log(req.body);
     const newUserData = await User.create(req.body);
     res.status(201).json(newUserData); // Return a 201 status code for successful creation
   } catch (err) {
@@ -82,18 +83,18 @@ async createUser(req, res) {
   //add friend route controller
   async createFriend(req, res) {
     try {
-      const userFriend = await User.FindOneAndUpdate(
+      const userFriend = await User.findOneAndUpdate(
         { _id: req.params.userId },
-        { $addtoSet: { friends: req.body } },
+        { $addToSet: { friends: req.body.friendId } }, // Use $addToSet to add the friend's ID
         { runValidators: true, new: true }
       );
-
+  
       if (!userFriend) {
         return res.status(404).json({
           message: "No user with that Id",
         });
       }
-      res.json(user);
+      res.json(userFriend);
     } catch (err) {
       res.status(500).json(err);
     }
@@ -103,19 +104,19 @@ async createUser(req, res) {
   async deleteFriend(req, res) {
     try {
       const user = await User.findOneAndUpdate(
-        { _id: req.params.friendId },
-        { $pull: { friends: { friendId: req.params.friendId } } },
+        { _id: req.params.userId },
+        { $pull: { friends: req.params.friendId } }, // Use $pull to remove the friend's ID
         { runValidators: true, new: true }
       );
-
+  
       if (!user) {
         return res.status(404).json({
-          message: "No friend with that Id",
+          message: "No user with that Id",
         });
       }
       res.json(user);
     } catch (err) {
       res.status(500).json(err);
     }
-  },
+  }
 };
