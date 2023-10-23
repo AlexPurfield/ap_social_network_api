@@ -4,7 +4,7 @@ const reactionSchema = require('./Reaction');
 
 const thoughtSchema = new Schema(
     {
-        thoughtTest: {
+        thoughtText: {
             type: String,
             minLength: 1,
             maxLength: 280,
@@ -13,10 +13,8 @@ const thoughtSchema = new Schema(
         createdAt: {
             type: Date,
             default: Date.now,
-            get: function(createdAt) {
-                return createdAt.toISOString();
-            }
-        },
+            },
+        
 
         username: {
             type: String,
@@ -24,11 +22,18 @@ const thoughtSchema = new Schema(
         },
         reactions: 
             [reactionSchema],
+    },
+    {
+        toJSON: {
+            virtuals:true,
+        },
+        id:false
+    }
         
-    });
+    );
 
-    reactionSchema.virtual('reactionCount').get(function () {
+    thoughtSchema.virtual('reactionCount').get(function () {
         return this.reactions.length;
     });
-    const Thought = model('Thought', thoughtSchema);
+    const Thought = model('thoughts', thoughtSchema);
     module.exports= Thought;

@@ -7,7 +7,7 @@ module.exports = {
       const users = await User.find();
       res.json(users);
     } catch (err) {
-      res.status(500).json(err);
+      res.status(500).json({ error: 'Internal Server Error'});
     }
   },
 

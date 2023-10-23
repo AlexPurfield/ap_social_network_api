@@ -1,6 +1,7 @@
 const {Schema, model} = require('mongoose'); //Types or model? 
 //destructure object
 
+
 const userSchema= new Schema(
     {
         username: {
