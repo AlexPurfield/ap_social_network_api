@@ -26,15 +26,16 @@ module.exports = {
     }
   },
 
-  //create new user route controller
-  async createUser(req, res) {
-    try {
-      const newUserData = await User.create(req.body);
-      res.json(newUserData);
-    } catch (err) {
-      res.status(500).json(err);
-    }
-  },
+// Create new user route controller
+async createUser(req, res) {
+  try {
+    const newUserData = await User.create(req.body);
+    res.status(201).json(newUserData); // Return a 201 status code for successful creation
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to create a new user', details: err.message });
+  }
+},
+
 
   //update user route controller
   async updateUser(req, res) {
@@ -81,7 +82,7 @@ module.exports = {
   //add friend route controller
   async createFriend(req, res) {
     try {
-      const userFriend = await User.FindOneandUpdate(
+      const userFriend = await User.FindOneAndUpdate(
         { _id: req.params.userId },
         { $addtoSet: { friends: req.body } },
         { runValidators: true, new: true }
